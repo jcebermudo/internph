@@ -116,7 +116,7 @@ export default function Home() {
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.42 }}
-                className="select-none cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_1.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF]">
+                className="select-none cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF]">
                 <span className="drop-shadow-[0_1px_0_rgba(0,0,0,.45)]">
                   Join the Waitlist
                 </span>
