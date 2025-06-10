@@ -1,12 +1,67 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center w-full px-[10px] pb-[50px]">
+      <div
+        className={`fixed top-0 left-0 w-full h-full z-50 transition-all duration-300  ${
+          isOpen ? "opacity-100 bg-white/70" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col items-center bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF]  outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center gap-[5px] max-w-[380px] w-full rounded-[10px]">
+          <div className="flex flex-col items-center justify-center gap-[2px] p-[30px]">
+            <Image
+            className="select-none"
+              src="/images/icon.svg"
+              alt="InternPH"
+              width={50}
+              height={50}
+              unoptimized={true}
+            />
+            <h3 className="text-[20px] text-[#273750] font-bold text-center">
+              Join the waitlist
+            </h3>
+            <p className="text-[16px] text-[#273750] font-medium text-center max-w-[250px]">
+              Get early access on exclusive internship offers.
+            </p>
+          </div>
+          <hr className="w-full border-[#E6EEF8] border-b-[1px] border-dashed" />
+          <div className="flex flex-col items-center justify-center gap-[2px] p-[30px]">
+            <Image
+              src="/images/icon.svg"
+              alt="InternPH"
+              width={50}
+              height={50}
+              unoptimized={true}
+            />
+            <h3 className="text-[20px] text-[#273750] font-bold text-center">
+              Join the waitlist
+            </h3>
+            <p className="text-[16px] text-[#273750] font-medium text-center max-w-[250px]">
+              Get early access on exclusive internship offers.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        className={
+          "flex flex-col items-center justify-center w-full px-[10px] pb-[50px]"
+        }
+      >
         <div className="flex flex-col items-center justify-center gap-[20px] max-w-[580px] w-full">
           <div className="relative w-fit h-fit">
             <motion.div
@@ -72,8 +127,8 @@ export default function Home() {
                   className="select-none"
                   src="/images/internph.svg"
                   alt="InternPH"
-                  width={167.3}
-                  height={40}
+                  width={140.3}
+                  height={30}
                   unoptimized={true}
                 />
               </motion.div>
@@ -107,6 +162,7 @@ export default function Home() {
 
             <div className="flex flex-col items-center justify-center">
               <motion.button
+                onClick={handleOpen}
                 initial={{
                   opacity: 0,
                   y: 30,
