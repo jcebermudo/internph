@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { X } from "lucide-react";
 
 type Inputs = {
   email: string;
@@ -25,6 +26,7 @@ type Inputs = {
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -46,12 +48,29 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className={`fixed top-0 left-0 w-full h-full z-50 transition-all duration-300  ${
+        className={`fixed flex flex-col items-center justify-center top-0 left-0 w-full h-full z-50 transition-all duration-200  ${
           isOpen ? "opacity-100 bg-white/70" : "opacity-0 pointer-events-none"
         }`}
+        onClick={handleClose}
       >
-        <div className="flex flex-col items-center bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF]  outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center gap-[5px] max-w-[380px] w-full rounded-[10px]">
-          <div className="flex flex-col items-center justify-center gap-[2px] p-[30px]">
+        <motion.div
+          onClick={(e) => e.stopPropagation()}
+          variants={{
+            hidden: { opacity: 0, y: 30, filter: "blur(10px)", scale: 0.9 },
+            visible: { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 },
+          }}
+          initial="hidden"
+          animate={isOpen ? "visible" : "hidden"}
+          transition={{ duration: 0.3, type: "spring" }}
+          className="flex flex-col items-center bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF]  outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center gap-[5px] max-w-[450px] w-full rounded-[10px]"
+        >
+          <div className="flex flex-row items-center justify-end w-full p-[20px]">
+            <X
+              className="w-[30px] h-[30px] cursor-pointer text-[#273750] hover:bg-[#929aa47a] rounded-full transition-all duration-200 p-[5px]"
+              onClick={handleClose}
+            />
+          </div>
+          <div className="flex flex-col items-center justify-center gap-[2px] px-[30px] pb-[30px]">
             <Image
               className="select-none"
               src="/images/icon.svg"
@@ -180,6 +199,8 @@ export default function Home() {
                   <select
                     className="w-full cursor-pointer appearance-none p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7] pr-8"
                     {...register("year")}
+                    onClick={() => setIsSelectOpen(!isSelectOpen)}
+                    onBlur={() => setIsSelectOpen(false)}
                   >
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -189,13 +210,27 @@ export default function Home() {
                     <option value="6">6</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#273750]">
-                    <svg
-                      className="h-4 w-4 fill-current"
+                    <motion.svg
                       xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-chevron-down-icon lucide-chevron-down"
+                      animate={{
+                        rotate: isSelectOpen ? 0 : 180,
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        type: "spring",
+                      }}
                     >
-                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                    </svg>
+                      <path d="m6 9 6 6 6-6" />
+                    </motion.svg>
                   </div>
                 </div>
                 {errors.year && (
@@ -233,6 +268,29 @@ export default function Home() {
                 )}
               </div>
             </div>
+            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+              <label className="font-medium text-[16px] text-[#273750]">
+                What kind of internship are you looking for?
+              </label>
+              <input
+                type="text"
+                placeholder="IT-related roles"
+                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                {...register("degreeProgram", {
+                  required: "Field is required",
+                })}
+              />
+              {errors.degreeProgram && (
+                <motion.span
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="font-medium text-[14px] text-[#ff3478]"
+                >
+                  {errors.degreeProgram.message}
+                </motion.span>
+              )}
+            </div>
             <motion.button
               type="submit"
               initial={{
@@ -243,14 +301,14 @@ export default function Home() {
               }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.42 }}
-              className="select-none cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF] w-full"
+              className="select-none mt-[10px] cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF] w-full"
             >
               <span className="drop-shadow-[0_1px_0_rgba(0,0,0,.45)]">
                 Join the Waitlist
               </span>
             </motion.button>
           </form>
-        </div>
+        </motion.div>
       </div>
       <div
         className={
