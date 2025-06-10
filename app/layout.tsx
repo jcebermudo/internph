@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const satoshi = localFont({
+  src: "../public/fonts/Satoshi-Variable.ttf",
 });
 
 export const metadata: Metadata = {
   title: "InternPH",
   description: "Find your OJT in just a few clicks.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png" },
+      { url: "/apple-icon-180x180.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "InternPH",
     description: "Find your OJT in just a few clicks.",
@@ -38,11 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`${satoshi.className} antialiased selection:bg-[#216AF8] selection:text-white`}>{children}</body>
     </html>
   );
 }
