@@ -40,7 +40,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${satoshi.className} antialiased selection:bg-[#216AF8] selection:text-white`}>{children}</body>
+      <body
+        className={`${satoshi.className} antialiased selection:bg-[#216AF8] selection:text-white`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
