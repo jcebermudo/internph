@@ -97,7 +97,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center gap-[2px] px-[30px] pb-[30px] ">
             <Image
               className="select-none"
-              src="/images/icon.svg"
+              src="/images/Icon.svg"
               alt="InternPH"
               width={50}
               height={50}
