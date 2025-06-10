@@ -8,6 +8,7 @@ const satoshi = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://internph.com"),
   title: "InternPH",
   description: "Find your OJT in just a few clicks.",
   icons: {
