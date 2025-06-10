@@ -42,13 +42,38 @@ export default function Home() {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  console.log(watch("email"));
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      console.log(data);
+      const formBody = `firstName=${encodeURIComponent(data.firstName)}&lastName=${encodeURIComponent(data.lastName)}&email=${encodeURIComponent(data.email)}&facebookLink=${encodeURIComponent(data.facebook)}&school=${encodeURIComponent(data.school)}&year=${encodeURIComponent(data.year)}&degreeProgram=${encodeURIComponent(data.degreeProgram)}&desiredRole=${encodeURIComponent(data.desiredRole)}`;
+
+      const response = await fetch(
+        "https://app.loops.so/api/newsletter-form/cmbphq5ub02xb0s0iulfr03a6",
+        {
+          method: "POST",
+          body: formBody,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      // Handle success (e.g., show success message, reset form)
+      handleClose(); // Close the modal on success
+    } catch (error) {
+      // Handle error (e.g., show error message to user)
+      console.error("Error submitting form:", error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className={`fixed flex flex-col items-center justify-center top-0 left-0 w-full h-full z-50 transition-all duration-200  ${
+        className={`fixed flex flex-col items-center justify-center top-0 left-0 w-full h-screen z-50 transition-all duration-200  ${
           isOpen ? "opacity-100 bg-white/70" : "opacity-0 pointer-events-none"
         }`}
         onClick={handleClose}
@@ -62,15 +87,15 @@ export default function Home() {
           initial="hidden"
           animate={isOpen ? "visible" : "hidden"}
           transition={{ duration: 0.3, type: "spring" }}
-          className="flex flex-col items-center bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF]  outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center gap-[5px] max-w-[450px] w-full rounded-[10px]"
+          className="bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF] flex flex-col items-center outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center max-w-[450px] w-full rounded-[10px]"
         >
-          <div className="flex flex-row items-center justify-end w-full p-[20px]">
+          <div className="flex flex-row items-center justify-end w-full p-[20px] ">
             <X
               className="w-[30px] h-[30px] cursor-pointer text-[#273750] hover:bg-[#929aa47a] rounded-full transition-all duration-200 p-[5px]"
               onClick={handleClose}
             />
           </div>
-          <div className="flex flex-col items-center justify-center gap-[2px] px-[30px] pb-[30px]">
+          <div className="flex flex-col items-center justify-center gap-[2px] px-[30px] pb-[30px] ">
             <Image
               className="select-none"
               src="/images/icon.svg"
@@ -88,225 +113,258 @@ export default function Home() {
           </div>
           <hr className="w-full border-[#E6EEF8] border-b-[1px] border-dashed" />
           <form
-            className="flex flex-col items-center justify-center gap-[10px] w-full p-[30px]"
+            className="flex flex-col items-center justify-start w-full"
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
-            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
-              <label className="font-medium text-[16px] text-[#273750]">
-                Email
-              </label>
-              <input
-                type="text"
-                placeholder="juan@gmail.com"
-                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                {...register("email", {
-                  required: "Field is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Please enter a valid email address",
-                  },
-                })}
-              />
-              {errors.email && (
-                <motion.span
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, type: "spring" }}
-                  className="font-medium text-[14px] text-[#ff3478]"
-                >
-                  {errors.email.message}
-                </motion.span>
-              )}
-            </div>
-            <div className="flex flex-row items-start justify-center gap-[10px] w-full">
+            <div className="bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF] flex flex-col items-center justify-start gap-[10px] w-full py-[15px] px-[30px] h-[300px] overflow-y-auto">
               <div className="flex flex-col items-start justify-center gap-[5px] w-full">
                 <label className="font-medium text-[16px] text-[#273750]">
-                  First Name
+                  Email
                 </label>
                 <input
                   type="text"
-                  placeholder="Juan"
+                  placeholder="juan@gmail.com"
                   className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                  {...register("firstName", {
+                  {...register("email", {
                     required: "Field is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Please enter a valid email address",
+                    },
                   })}
                 />
-                {errors.firstName && (
+                {errors.email && (
                   <motion.span
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, type: "spring" }}
                     className="font-medium text-[14px] text-[#ff3478]"
                   >
-                    {errors.firstName.message}
+                    {errors.email.message}
                   </motion.span>
                 )}
               </div>
               <div className="flex flex-col items-start justify-center gap-[5px] w-full">
                 <label className="font-medium text-[16px] text-[#273750]">
-                  Last Name
+                  Facebook Profile
                 </label>
                 <input
                   type="text"
-                  placeholder="Dela Cruz"
+                  placeholder="https://www.facebook.com/juan.delacruz"
                   className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                  {...register("lastName", {
+                  {...register("facebook", {
                     required: "Field is required",
+                    pattern: {
+                      value:
+                        /^https:\/\/www\.facebook\.com\/[a-zA-Z0-9\.\-_]+$/,
+                      message: "Please enter a valid Facebook profile URL",
+                    },
                   })}
                 />
-                {errors.lastName && (
+                {errors.facebook && (
                   <motion.span
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, type: "spring" }}
                     className="font-medium text-[14px] text-[#ff3478]"
                   >
-                    {errors.lastName.message}
+                    {errors.facebook.message}
                   </motion.span>
                 )}
               </div>
-            </div>
-            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
-              <label className="font-medium text-[16px] text-[#273750]">
-                Name of School
-              </label>
-              <input
-                type="text"
-                placeholder="University of the Philippines"
-                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                {...register("school", {
-                  required: "Field is required",
-                })}
-              />
-              {errors.school && (
-                <motion.span
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, type: "spring" }}
-                  className="font-medium text-[14px] text-[#ff3478]"
-                >
-                  {errors.school.message}
-                </motion.span>
-              )}
-            </div>
-            <div className="flex flex-row items-start justify-center gap-[10px] w-full">
-              <div className="flex flex-col items-start justify-center gap-[5px] w-[80px]">
-                <label className="font-medium text-[16px] text-[#273750]">
-                  Year
-                </label>
-                <div className="relative w-[60px]">
-                  <select
-                    className="w-full cursor-pointer appearance-none p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7] pr-8"
-                    {...register("year")}
-                    onClick={() => setIsSelectOpen(!isSelectOpen)}
-                    onBlur={() => setIsSelectOpen(false)}
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#273750]">
-                    <motion.svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-chevron-down-icon lucide-chevron-down"
-                      animate={{
-                        rotate: isSelectOpen ? 0 : 180,
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        type: "spring",
-                      }}
+              <div className="flex flex-row items-start justify-center gap-[10px] w-full">
+                <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                  <label className="font-medium text-[16px] text-[#273750]">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Juan"
+                    className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                    {...register("firstName", {
+                      required: "Field is required",
+                    })}
+                  />
+                  {errors.firstName && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.5, type: "spring" }}
+                      className="font-medium text-[14px] text-[#ff3478]"
                     >
-                      <path d="m6 9 6 6 6-6" />
-                    </motion.svg>
-                  </div>
+                      {errors.firstName.message}
+                    </motion.span>
+                  )}
                 </div>
-                {errors.year && (
-                  <motion.span
-                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.5, type: "spring" }}
-                    className="font-medium text-[14px] text-[#ff3478]"
-                  >
-                    {errors.year.message}
-                  </motion.span>
-                )}
+                <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                  <label className="font-medium text-[16px] text-[#273750]">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Dela Cruz"
+                    className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                    {...register("lastName", {
+                      required: "Field is required",
+                    })}
+                  />
+                  {errors.lastName && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.5, type: "spring" }}
+                      className="font-medium text-[14px] text-[#ff3478]"
+                    >
+                      {errors.lastName.message}
+                    </motion.span>
+                  )}
+                </div>
               </div>
               <div className="flex flex-col items-start justify-center gap-[5px] w-full">
                 <label className="font-medium text-[16px] text-[#273750]">
-                  Degree Program
+                  Name of School
                 </label>
                 <input
                   type="text"
-                  placeholder="BS Computer Science"
+                  placeholder="University of the Philippines"
                   className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                  {...register("degreeProgram", {
+                  {...register("school", {
                     required: "Field is required",
                   })}
                 />
-                {errors.degreeProgram && (
+                {errors.school && (
                   <motion.span
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, type: "spring" }}
                     className="font-medium text-[14px] text-[#ff3478]"
                   >
-                    {errors.degreeProgram.message}
+                    {errors.school.message}
+                  </motion.span>
+                )}
+              </div>
+              <div className="flex flex-row items-start justify-center gap-[10px] w-full">
+                <div className="flex flex-col items-start justify-center gap-[5px] w-[80px]">
+                  <label className="font-medium text-[16px] text-[#273750]">
+                    Year
+                  </label>
+                  <div className="relative w-[60px]">
+                    <select
+                      className="w-full cursor-pointer appearance-none p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7] pr-8"
+                      {...register("year")}
+                      onClick={() => setIsSelectOpen(!isSelectOpen)}
+                      onBlur={() => setIsSelectOpen(false)}
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#273750]">
+                      <motion.svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-chevron-down-icon lucide-chevron-down"
+                        animate={{
+                          rotate: isSelectOpen ? 0 : 180,
+                        }}
+                        transition={{
+                          duration: 0.3,
+                          type: "spring",
+                        }}
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </motion.svg>
+                    </div>
+                  </div>
+                  {errors.year && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.5, type: "spring" }}
+                      className="font-medium text-[14px] text-[#ff3478]"
+                    >
+                      {errors.year.message}
+                    </motion.span>
+                  )}
+                </div>
+                <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                  <label className="font-medium text-[16px] text-[#273750]">
+                    Degree Program
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="BS Computer Science"
+                    className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                    {...register("degreeProgram", {
+                      required: "Field is required",
+                    })}
+                  />
+                  {errors.degreeProgram && (
+                    <motion.span
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ duration: 0.5, type: "spring" }}
+                      className="font-medium text-[14px] text-[#ff3478]"
+                    >
+                      {errors.degreeProgram.message}
+                    </motion.span>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                <label className="font-medium text-[16px] text-[#273750]">
+                  What kind of internship are you looking for?
+                </label>
+                <input
+                  type="text"
+                  placeholder="IT-related roles"
+                  className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                  {...register("desiredRole", {
+                    required: "Field is required",
+                  })}
+                />
+                {errors.desiredRole && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className="font-medium text-[14px] text-[#ff3478]"
+                  >
+                    {errors.desiredRole.message}
                   </motion.span>
                 )}
               </div>
             </div>
-            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
-              <label className="font-medium text-[16px] text-[#273750]">
-                What kind of internship are you looking for?
-              </label>
-              <input
-                type="text"
-                placeholder="IT-related roles"
-                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
-                {...register("degreeProgram", {
-                  required: "Field is required",
-                })}
-              />
-              {errors.degreeProgram && (
-                <motion.span
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, type: "spring" }}
-                  className="font-medium text-[14px] text-[#ff3478]"
-                >
-                  {errors.degreeProgram.message}
-                </motion.span>
-              )}
+            <hr className="w-full border-[#E6EEF8] border-b-[1px] border-dashed" />
+            <div className="flex flex-col items-center justify-center w-full px-[30px] py-[20px]">
+              <motion.button
+                type="submit"
+                initial={{
+                  opacity: 0,
+                  y: 30,
+                  filter: "blur(10px)",
+                  scale: 0.9,
+                }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.42 }}
+                className="select-none cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF] w-full"
+              >
+                <span className="drop-shadow-[0_1px_0_rgba(0,0,0,.45)]">
+                  Join the Waitlist
+                </span>
+              </motion.button>
             </div>
-            <motion.button
-              type="submit"
-              initial={{
-                opacity: 0,
-                y: 30,
-                filter: "blur(10px)",
-                scale: 0.9,
-              }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.42 }}
-              className="select-none mt-[10px] cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF] w-full"
-            >
-              <span className="drop-shadow-[0_1px_0_rgba(0,0,0,.45)]">
-                Join the Waitlist
-              </span>
-            </motion.button>
           </form>
         </motion.div>
       </div>
