@@ -130,9 +130,14 @@ export default function Home() {
             className="w-full border-[#E6EEF8] border-b-[1px] my-[10px]"
           />
           <div className="flex flex-col items-center justify-center gap-[20px] w-full">
-            <h2 className="text-[20px] font-bold text-[#273750] text-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 30, filter: "blur(10px)", scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.56 }}
+              className="text-[20px] font-bold text-[#273750] text-center"
+            >
               How it works
-            </h2>
+            </motion.h2>
             <div className="flex flex-col items-center justify-center gap-[25px] w-full">
               <motion.div
                 initial={{
@@ -142,10 +147,19 @@ export default function Home() {
                   scale: 0.9,
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.49 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.63 }}
                 className="flex flex-row w-full gap-[30px] items-center"
               >
-                <div className="overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]"></div>
+                <div className="select-none relative overflow-hidden flex flex-col items-center justify-end min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                  <Image
+                    className="absolute top-[40px]"
+                    src="/images/1ststep.png"
+                    alt="InternPH"
+                    width={224}
+                    height={177}
+                    unoptimized={true}
+                  />
+                </div>
                 <div>
                   <div className="flex flex-row gap-[5px] items-center">
                     <span className="text-[14px] select-none w-[22px] h-[22px] flex items-center justify-center text-center rounded-full bg-[#667284] text-white font-bold">
@@ -169,10 +183,19 @@ export default function Home() {
                   scale: 0.9,
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.49 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.7 }}
                 className="flex flex-row w-full gap-[30px] items-center"
               >
-                <div className="overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]"></div>
+                <div className="select-none relative flex flex-col items-center justify-end overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                  <Image
+                    className="absolute top-[50px]"
+                    src="/images/2ndstep.png"
+                    alt="InternPH"
+                    width={280}
+                    height={177}
+                    unoptimized={true}
+                  />
+                </div>
                 <div>
                   <div className="flex flex-row gap-[5px] items-center">
                     <span className="text-[14px] select-none w-[22px] h-[22px] flex items-center justify-center text-center rounded-full bg-[#667284] text-white font-bold">
@@ -195,10 +218,19 @@ export default function Home() {
                   scale: 0.9,
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.49 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.77 }}
                 className="flex flex-row w-full gap-[30px] items-center"
               >
-                <div className="overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]"></div>
+                <div className="select-none relative flex flex-col items-center justify-center overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                  <Image
+                    className="absolute top-[30px]"
+                    src="/images/3rdstep.png"
+                    alt="InternPH"
+                    width={240}
+                    height={177}
+                    unoptimized={true}
+                  />
+                </div>
                 <div>
                   <div className="flex flex-row gap-[5px] items-center ">
                     <span className="text-[14px] select-none w-[22px] h-[22px] flex items-center justify-center text-center rounded-full bg-[#667284] text-white font-bold">
@@ -219,14 +251,14 @@ export default function Home() {
           <motion.hr
             initial={{ opacity: 0, y: 30, filter: "blur(10px)", scale: 0.9 }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.49 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.84 }}
             className="w-full border-[#E6EEF8] border-b-[1px] my-[10px]"
           />
           <motion.p
             initial={{ opacity: 0, y: 30, filter: "blur(10px)", scale: 0.9 }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.49 }}
-            className="text-[14px] font-normal text-[#273750] text-center"
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.91 }}
+            className="select-none text-[14px] font-normal text-[#273750] text-center"
           >
             © 2025 InternPH. All rights reserved.
           </motion.p>
