@@ -3,6 +3,25 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type Inputs = {
+  email: string;
+  emailRequired: string;
+  firstName: string;
+  firstNameRequired: string;
+  lastName: string;
+  lastNameRequired: string;
+  school: string;
+  schoolRequired: string;
+  year: number;
+  yearRequired: number;
+  degreeProgram: string;
+  degreeProgramRequired: string;
+  facebook: string;
+  desiredRole: string;
+  desiredRoleRequired: string;
+};
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +34,15 @@ export default function Home() {
     setIsOpen(false);
   };
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  console.log(watch("email"));
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div
@@ -25,7 +53,7 @@ export default function Home() {
         <div className="flex flex-col items-center bg-gradient-to-t from-[#F7FAFF] to-[#FFFFFF]  outline outline-[#E6EEF8] drop-shadow-[0_2px_1.5px_rgba(162,190,231,0.5)] justify-center gap-[5px] max-w-[380px] w-full rounded-[10px]">
           <div className="flex flex-col items-center justify-center gap-[2px] p-[30px]">
             <Image
-            className="select-none"
+              className="select-none"
               src="/images/icon.svg"
               alt="InternPH"
               width={50}
@@ -40,21 +68,188 @@ export default function Home() {
             </p>
           </div>
           <hr className="w-full border-[#E6EEF8] border-b-[1px] border-dashed" />
-          <div className="flex flex-col items-center justify-center gap-[2px] p-[30px]">
-            <Image
-              src="/images/icon.svg"
-              alt="InternPH"
-              width={50}
-              height={50}
-              unoptimized={true}
-            />
-            <h3 className="text-[20px] text-[#273750] font-bold text-center">
-              Join the waitlist
-            </h3>
-            <p className="text-[16px] text-[#273750] font-medium text-center max-w-[250px]">
-              Get early access on exclusive internship offers.
-            </p>
-          </div>
+          <form
+            className="flex flex-col items-center justify-center gap-[10px] w-full p-[30px]"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
+            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+              <label className="font-medium text-[16px] text-[#273750]">
+                Email
+              </label>
+              <input
+                type="text"
+                placeholder="juan@gmail.com"
+                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                {...register("email", {
+                  required: "Field is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Please enter a valid email address",
+                  },
+                })}
+              />
+              {errors.email && (
+                <motion.span
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="font-medium text-[14px] text-[#ff3478]"
+                >
+                  {errors.email.message}
+                </motion.span>
+              )}
+            </div>
+            <div className="flex flex-row items-start justify-center gap-[10px] w-full">
+              <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                <label className="font-medium text-[16px] text-[#273750]">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Juan"
+                  className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                  {...register("firstName", {
+                    required: "Field is required",
+                  })}
+                />
+                {errors.firstName && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className="font-medium text-[14px] text-[#ff3478]"
+                  >
+                    {errors.firstName.message}
+                  </motion.span>
+                )}
+              </div>
+              <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                <label className="font-medium text-[16px] text-[#273750]">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Dela Cruz"
+                  className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                  {...register("lastName", {
+                    required: "Field is required",
+                  })}
+                />
+                {errors.lastName && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className="font-medium text-[14px] text-[#ff3478]"
+                  >
+                    {errors.lastName.message}
+                  </motion.span>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+              <label className="font-medium text-[16px] text-[#273750]">
+                Name of School
+              </label>
+              <input
+                type="text"
+                placeholder="University of the Philippines"
+                className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                {...register("school", {
+                  required: "Field is required",
+                })}
+              />
+              {errors.school && (
+                <motion.span
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, type: "spring" }}
+                  className="font-medium text-[14px] text-[#ff3478]"
+                >
+                  {errors.school.message}
+                </motion.span>
+              )}
+            </div>
+            <div className="flex flex-row items-start justify-center gap-[10px] w-full">
+              <div className="flex flex-col items-start justify-center gap-[5px] w-[80px]">
+                <label className="font-medium text-[16px] text-[#273750]">
+                  Year
+                </label>
+                <div className="relative w-[60px]">
+                  <select
+                    className="w-full cursor-pointer appearance-none p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7] pr-8"
+                    {...register("year")}
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#273750]">
+                    <svg
+                      className="h-4 w-4 fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                    </svg>
+                  </div>
+                </div>
+                {errors.year && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className="font-medium text-[14px] text-[#ff3478]"
+                  >
+                    {errors.year.message}
+                  </motion.span>
+                )}
+              </div>
+              <div className="flex flex-col items-start justify-center gap-[5px] w-full">
+                <label className="font-medium text-[16px] text-[#273750]">
+                  Degree Program
+                </label>
+                <input
+                  type="text"
+                  placeholder="BS Computer Science"
+                  className="w-full p-[10px] rounded-[10px] border-[1px] focus:outline-[#0167FF] focus:outline-[2px] border-[#E6EEF8] bg-[#EDF0F7]"
+                  {...register("degreeProgram", {
+                    required: "Field is required",
+                  })}
+                />
+                {errors.degreeProgram && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.5, type: "spring" }}
+                    className="font-medium text-[14px] text-[#ff3478]"
+                  >
+                    {errors.degreeProgram.message}
+                  </motion.span>
+                )}
+              </div>
+            </div>
+            <motion.button
+              type="submit"
+              initial={{
+                opacity: 0,
+                y: 30,
+                filter: "blur(10px)",
+                scale: 0.9,
+              }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.42 }}
+              className="select-none cursor-pointer inset-shadow-[0_1px_0_rgba(255,255,255,.45)] drop-shadow-[0_2px_0.5px_#A2BEE7] bg-gradient-to-t from-[#216AF8] via-[#0066FF] to-[#4A93FF] text-white text-[16px] font-bold px-[15px] py-[6px] rounded-[10px] outline-[1px] outline-[#003CFF] w-full"
+            >
+              <span className="drop-shadow-[0_1px_0_rgba(0,0,0,.45)]">
+                Join the Waitlist
+              </span>
+            </motion.button>
+          </form>
         </div>
       </div>
       <div
