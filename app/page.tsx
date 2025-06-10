@@ -70,7 +70,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center overflow-x-hidden">
       <div
         className={`fixed flex flex-col items-center justify-center top-0 left-0 w-full h-screen z-50 transition-all duration-200  ${
           isOpen ? "opacity-100 bg-white/70" : "opacity-0 pointer-events-none"
@@ -395,7 +395,7 @@ export default function Home() {
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.07 }}
             >
               <Image
-                className="select-none absolute top-[70px] left-[180px]"
+                className="select-none absolute top-[70px] left-[170px]"
                 src="/images/opening2.png"
                 alt="InternPH"
                 quality={100}
@@ -514,9 +514,9 @@ export default function Home() {
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.63 }}
-                className="flex flex-row w-full gap-[30px] items-center"
+                className="flex flex-col md:flex-row w-full gap-[30px] items-center"
               >
-                <div className="select-none relative overflow-hidden flex flex-col items-center justify-end min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                <div className="select-none relative overflow-hidden flex flex-col items-center justify-end min-w-[320px] w-full md:max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
                   <Image
                     className="absolute top-[40px]"
                     src="/images/1ststep.png"
@@ -550,9 +550,9 @@ export default function Home() {
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.7 }}
-                className="flex flex-row w-full gap-[30px] items-center"
+                className="flex flex-col md:flex-row w-full gap-[30px] items-center"
               >
-                <div className="select-none relative flex flex-col items-center justify-end overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                <div className="select-none relative flex flex-col items-center justify-end overflow-hidden min-w-[320px] w-full md:max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
                   <Image
                     className="absolute top-[50px]"
                     src="/images/2ndstep.png"
@@ -585,9 +585,9 @@ export default function Home() {
                 }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut", delay: 0.77 }}
-                className="flex flex-row w-full gap-[30px] items-center"
+                className="flex flex-col md:flex-row w-full gap-[30px] items-center"
               >
-                <div className="select-none relative flex flex-col items-center justify-center overflow-hidden min-w-[320px] w-full max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
+                <div className="select-none relative flex flex-col items-center justify-center overflow-hidden min-w-[320px] w-full md:max-w-[320px] bg-gradient-to-t from-[#A6CAFF] to-[#0066FF] h-[210px] rounded-[10px]">
                   <Image
                     className="absolute top-[30px]"
                     src="/images/3rdstep.png"
